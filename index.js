@@ -1,54 +1,31 @@
-const toastAlert = document.querySelector("#alert")
 const charging = document.querySelector(".charging")
 const chargingTime = document.querySelector(".chargingTime")
+
 const levelBattery = document.querySelector(".levelBattery")
-
-window.onload = () => {
-  if (!navigator.getBattery) {
-    alert('Battery Status Api Is Not Supported On Your Browser')
-  }
-
-  if (!navigator.onLine) {
-    toastAlert.classList.add("online")
-    toastAlert.innerHTML = "Is Not Online"
-
-    setTimeout(() => {
-      toastAlert.innerHTML = ""
-    }, 3000)
-  }
-
-  toastAlert.classList.add("online")
-  toastAlert.innerHTML = "Status: Online"
-
-  setTimeout(() => {
-    toastAlert.innerHTML = ""
-  }, 3000)
-}
+const batteryFill = document.querySelector(".batteryFill")
 
 navigator.getBattery().then((battery) => {
   function UpdateBatteryInfo() {
     BaterryChargingInfo()
+    
     LevelChargingInfo()
+    UpdateBatteryLevel()
   }
 
   UpdateBatteryInfo()
 
-  // Event dispared when is charging change ||
-                      //                    \/
-
+  // Event triggered when charging status changes
   battery.addEventListener("chargingchange", () => {
     UpdateBatteryInfo()
   })
 
-  // Event dispared when is level of battery change ||
-                              //                    \/
-
+  // Event triggered when battery level changes
   battery.addEventListener("levelchange", () => {
     UpdateBatteryInfo()
   })
 
   function LevelChargingInfo() {
-    let levelBaterry = parseInt(battery.level * 100 + "%")
+    let levelBaterry = parseInt(battery.level * 100)
     levelBattery.innerHTML = levelBaterry + "%"
   }
 
@@ -56,15 +33,12 @@ navigator.getBattery().then((battery) => {
     if (battery.charging) {
       charging.innerHTML = "Charging"
 
-      if (battery.chargingTime) {  
+      if (battery.chargingTime) {
         let hour = parseInt(battery.chargingTime / 3600)
         let minutes = parseInt(battery.chargingTime / 60 - hour * 60)
-  
-        console.log(minutes)
-  
+
         chargingTime.innerHTML = `${hour}hr ${minutes}mins remaining`
       }
-
     } else {
       charging.innerHTML = "Not Charging"
 
@@ -74,6 +48,22 @@ navigator.getBattery().then((battery) => {
 
         chargingTime.innerHTML = `${hour}hr ${minutes}mins remaining`
       }
+    }
+  }
+
+  function UpdateBatteryLevel() {
+    let levelBaterry = parseInt(battery.level * 100)
+
+    levelBattery.innerHTML = levelBaterry + "%"
+    batteryFill.style.width = `${levelBaterry}%`
+
+    // Set different colors based on battery level
+    if (levelBaterry === 100) {
+      batteryFill.style.backgroundColor = "#2ecc71" // Green when 100%
+    } else if (levelBaterry === 0) {
+      batteryFill.style.backgroundColor = "#fff" // Empty when 0%
+    } else {
+      batteryFill.style.backgroundColor = "#3498db" // Default blue
     }
   }
 })

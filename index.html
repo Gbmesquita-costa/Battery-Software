@@ -1,23 +1,104 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vite App</title>
 
-    <style>
-      .online {
-        transition: all 0.5s;
-        margin-left: 80px;
-      }
-    </style>
-  </head>
-  <body>
-    <div id="alert"></div>
-    <div class="charging"></div>
-    <div class="chargingTime"></div>
-    <div class="levelBattery"></div>
-    <script type="module" src="/index.js"></script>
-  </body>
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Baterry App</title>
+
+  <style>
+    body {
+      font-family: sans-serif;
+      display: flex;
+
+      align-items: center;
+      justify-content: center;
+
+      height: 100vh;
+      margin: 0;
+
+      text-align: center;
+      background-color: #f0f0f0;
+    }
+
+    .charging {
+      font-size: 1.6rem;
+    }
+
+    .chargingTime {
+      font-size: 1.4rem;
+    }
+
+    .batteryContainer {
+      text-align: center;
+    }
+
+    .batteryLevelContainer {
+      display: flex;
+      align-items: center;
+      
+      justify-content: center;
+      flex-direction: column;
+    }
+
+    .container {
+      display: inline-block;
+      width: 350px;
+      
+      height: 80px;
+      border: 1px solid #ccc;
+
+      position: relative;
+      overflow: hidden;
+
+      margin-top: 20px;
+    }
+
+    .batteryFill {
+      height: 100%;
+      width: 0;
+      background-color: #3498db;
+      
+      position: absolute;
+      transition: width 0.5s ease-in-out;
+    }
+
+    .levelBattery {
+      position: absolute;
+
+      display: flex;
+      justify-content: center; 
+
+      height: 100%;
+      width: 100%;
+
+      font-size: 1.6rem;
+      font-weight: bold;
+
+      color: #333;
+
+      text-align: center;
+      line-height: 30px;
+
+      color: #fff;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="batteryContainer">
+    <p class="charging"></p>
+    <p class="chargingTime"></p>
+    
+    <main class="batteryLevelContainer">
+      <div class="container">
+        <div class="batteryFill"></div>
+        <p class="levelBattery"></p>
+      </div>
+    </main>
+  </div>
+  <script type="module" src="/index.js"></script>
+</body>
 </html>
